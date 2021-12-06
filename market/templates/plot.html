@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block head %} 
+<title>Plot</title>
+<script src="{{ url_for('static',filename='js/plot.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+{% for prod in products %}
+    <button id="{{prod}}" onClick="graph_plot(this.id)">{{prod}}</button>
+{% endfor %}
+<br>
+    <img id='hello' alt="Chart" height="420" >
+{% endblock %}

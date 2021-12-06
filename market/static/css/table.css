@@ -1,0 +1,40 @@
+body{
+    background-size: cover;
+    box-sizing: border-box;
+}
+h1 {
+    color:white;
+}
+.backtable{
+    display: inline-block;
+    text-align: center;
+    background: linear-gradient(45deg,#8000FF, #00CCFF);
+    padding: 1em;
+    border-radius: 1.5em;
+}
+table{
+    display: inline-block;
+    color:white;
+    padding: 2em;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(20px);
+    border-spacing: 50px 0;
+    border-radius: 1em;
+    box-shadow: 10px 10px 10px rgba(46,54,68,0.3);
+}
+.center-horizontal {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.col-1{
+    max-width: 120px;
+}
+.col-2{
+    min-width: 120px;
+    max-width: 240px;
+}
+.col-4{
+    min-width: 240px;
+    max-width: 480px;
+}

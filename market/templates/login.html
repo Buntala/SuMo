@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% set active_page = "login" %}
+{% block head %} 
+<link rel="stylesheet" href="{{ url_for('static',filename='css/login.css') }}">
+<style>body{background-image: url("{{ url_for('static',filename='images/wall-01.jpg') }}")}</style>
+<title>Login to Your Account</title>
+{% endblock %}
+
+{% block body %}
+    <div class ="container">
+        <h2 style="text-align: center">Welcome to SuMo</h2>
+        <form method="POST" >
+            {{ form.hidden_tag() }}
+            
+            {{form.username.label()}}
+            {{form.username(placeholder="username", class="input")}}
+            
+            {{form.password.label()}}
+            {{form.password(placeholder="password", class="input")}}
+            <div style="text-align:center;">
+            {{form.submit(class="btn")}}
+            </div>
+        </form>
+    </div>
+{% endblock %}

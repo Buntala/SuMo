@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% set active_page = "admin" %}
+{% block head %} 
+
+<title>Admin Page</title>
+<link rel="stylesheet" href="{{ url_for('static',filename='css/table.css') }}">
+<style>body{background-image: url("{{ url_for('static',filename='images/wall-02.jpg') }}")}</style>
+{% endblock %}
+{% block body %}
+
+<div class="content"> 
+    <h1 style="text-align: center">Stock</h1>
+    {% if products|length <1 %}
+    <h1>No products scanned</h1>
+    {% else %}
+    <div class="backTable center-horizontal">
+        <table id='item-tab'>
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Product name</td>
+                    <td>Price</td>
+                    <td>Stock number</td>
+                    <td>Units</td>
+                    <td>Min. stock</td>
+                </tr>
+            </thead> 
+            <form action="{{ url_for('index') }}" method="POST">
+            <tbody>
+            {% for prod in products %}
+                <tr>
+                    <td>{{ prod.id }}</td>
+                    <td>{{ prod.prod_name }}</td>
+                    <td>{{ prod.price }}</td>
+                    <td>{{ prod.stock_num }}</td>
+                    <td>{{ prod.stock_unit}}</td>
+                    <td>{{ prod.min_stock}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            
+            <tfoot>
+                <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2"></td>
+                    <td colspan="2"></td>
+                </tr>
+            </tfoot>
+            </form>        
+        </table>
+    </div>
+    {% endif %}
+    {% for prod in products %}
+    <div>
+    <button id="{{prod}}" onClick="graph_plot(this.id)">{{prod}}</button>
+    {% endfor %}
+    <br>
+    <img id='hello' alt="Chart" height="420">
+    </div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% set active_page = "index" %}
+{% block head %} 
+<link rel="stylesheet" href="{{ url_for('static',filename='css/table.css') }}">
+<style>body{background-image: url("{{ url_for('static',filename='images/wall-02.jpg') }}")}</style>
+<script src="{{ url_for('static',filename='js/func.js') }}"></script>
+<title>SuMo</title>
+{% endblock %}
+
+{% block body %}
+
+<div class="content"> 
+
+    <h1 style="text-align: center">Item scanner</h1>
+    <div class="backtable center-horizontal">
+        
+    {% if products|length <1 %}
+    <h1 style="text-align: center"> No products scanned</h1>
+    {% else %}
+        <table id='item-tab'>
+            <thead>
+                <tr>
+                    <td>Product name</td>
+                    <td>Price</td>
+                    <td>Amount</td>
+                    <td>Units</td>
+                    <td>Total Price</td>
+                </tr>
+            </thead> 
+            <form action="{{ url_for('index') }}" method="POST">
+            <tbody>
+            {% for prod in products %}
+                <tr>
+                    <td class="col-4" name="prod-name">{{ prod.prod_name }}</td>
+                    <td class="col-2" id='price'>{{ prod.price }}</td>
+                    <!--<td></td>-->
+                    <td class="col-1"><input id='amount' name={{ prod.id }} type='number' min="1" max="50"></td>
+                    <td class="col-1">{{ prod.stock_unit }}</td>
+                    <td class="col-2" id='calc'>0</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            
+            <tfoot>
+                <tr height="10px"></tr>
+                <tr class="total">
+                    <td colspan="4">TOTAL</td>
+                    <td id="cummulative">0</td>
+                </tr>
+                <tr>
+                <td colspan="2"></td>
+                <td><input type="submit" value= "Confirm"></td>
+                </tr>
+            </tfoot>
+
+            </form>        
+        </table>
+    
+    {% endif %}
+    </div>
+    <!--
+    <div class="form">
+        <form action = '/' method='POST'> 
+            <input type="text" name="content" id="content">
+            <input type="submit" value="Add task">
+        </form>   
+    </div>-->
+</div>
+{% endblock %}
+<!---->
+<!---->

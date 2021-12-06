@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css?family=Shippori+Antique+B1');
+
+body{
+    background-size: cover;
+    box-sizing: border-box;
+}
+
+.container{
+    width: 800px;
+    margin: 0 auto;
+    margin-top: 13vh;
+    padding: 2em;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.7),rgba(255, 255, 255, 0.4));
+    color: black;
+    border-radius: 3em;
+    backdrop-filter: blur(20px);
+    /*border:solid 2px transparent;*/
+    background-clip:padding-box;
+    box-shadow: 10px 10px 10px rgba(46,54,68,0.1);
+}
+.container h2{
+    margin-bottom: 1.5em;
+    font-size: 3rem;
+    font-weight: 200;
+}
+.container label{
+    font-size: 1.3em;
+    margin-left: 0.8em;
+    display: block;
+}
+.container input{
+    height: 2em;
+    border-radius: 1em;
+    border: none;
+    background: rgba(116, 113, 113, 0.5);
+    font-size: 1.5em;
+}
+
+::placeholder {
+    font-size: 1em;
+    color:rgba(116, 113, 113);
+}
+
+.input{
+    margin: 0px;
+    margin-bottom: 2em;
+    display: block;
+    width: 100%;
+    padding-left: 20px;
+}
+
+.input:focus{
+    outline: none;
+}
+
+.btn{
+    display: inline-block;
+    text-align: center;
+    padding: 0.3em 1em;
+    color: rgba(116, 113, 113);
+    background: rgba(255, 123, 0,1);
+    backdrop-filter: blur(20px);
+}
+
+.btn:hover{
+    color: white;
+    background: linear-gradient(to right,#fc1c1c 30%, #f07b57);
+}
+
