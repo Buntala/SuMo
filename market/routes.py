@@ -8,24 +8,28 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from pyzbar.pyzbar import decode
 from market import app, db
 from flask import render_template ,request, url_for, redirect, flash, get_flashed_messages, Response #Web Framework
-from market.model import Stock, User
+from market.model import Stock, User, Sales
 from market.forms import LoginForm
 from wtforms import ValidationError
 from flask_login import login_user,logout_user,login_required,current_user 
 from market import session
+from datetime import datetime
 
 #Homepage after Login
 @app.route('/index', methods=['GET','POST'])
 @login_required
 def index():
-    #form2=PurchaseItemsForm()
     if request.method=="POST":
+        time_sales = datetime.now().replace(microsecond=0)
         for i in session:
-            print(request.form)
-            amount = request.form['2']
+            col_id = "amount_"+str(i) 
+            amount = request.form[col_id]
             prod = Stock.query.filter(Stock.id==str(i)).first()
-            prod.stock_num -= int(amount)
-            #db.session.commit()
+            total = int(amount)*int(prod.price)
+            hist = Sales(prod_name = prod.prod_name, date = time_sales, price = prod.price, amount=amount, total_price = total)
+            db.session.add(hist)
+            #prod.stock_num -= int(amount)
+            db.session.commit()
             print(prod.stock_num)
         session.clear()
         #return redirect(url_for('index'))
@@ -48,8 +52,6 @@ def admin():
 @app.route('/test', methods=['GET','POST'])
 @login_required
 def test():
-
-
     return redirect(url_for('index'))
 
 #Test page, only for debugging
@@ -127,12 +129,12 @@ def login():
     if form.validate_on_submit():
         user_exist = User.query.filter(User.username == form.username.data).first()
         if user_exist and user_exist.check_password_correction(submitted_pass=form.password.data):
-                login_user(user_exist)
-                #flash("You are logged in!")
-                if current_user.is_admin:
-                    return redirect(url_for('admin'))
-                else:
-                    return redirect(url_for('index'))
+            login_user(user_exist)
+            #flash("You are logged in!")
+            if current_user.is_admin:
+                return redirect(url_for('admin'))
+            else:
+                return redirect(url_for('index'))
         else:
             print("no")
             return redirect(url_for('login'))

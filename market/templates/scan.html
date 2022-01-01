@@ -31,12 +31,13 @@
             <tbody>
             {% for prod in products %}
                 <tr>
+                    
                     <td class="col-4" name="prod-name">{{ prod.prod_name }}</td>
                     <td class="col-2" id='price'>{{ prod.price }}</td>
                     <!--<td></td>-->
-                    <td class="col-1"><input id='amount' name={{ prod.id }} type='number' min="1" max="50"></td>
+                    <td class="col-1"><input id='amount' name={{  "amount_" +prod.id|string  }} type='number' min="1" max="50"></td>
                     <td class="col-1">{{ prod.stock_unit }}</td>
-                    <td class="col-2" id='calc'>0</td>
+                    <td class="col-2" id='calc'>0<input name={{  "total_" +prod.id|string  }} type='hidden' value={{prod.total_price}}></td>
                 </tr>
             {% endfor %}
             </tbody>
