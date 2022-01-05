@@ -4,16 +4,17 @@
 
 <title>Admin Page</title>
 <link rel="stylesheet" href="{{ url_for('static',filename='css/table.css') }}">
+<link rel="stylesheet" href="{{ url_for('static',filename='css/admin.css') }}">
+<script src='static/js/plot.js'></script>
 <style>body{background-image: url("{{ url_for('static',filename='images/wall-02.jpg') }}")}</style>
 {% endblock %}
 {% block body %}
 
 <div class="content"> 
-    <h1 style="text-align: center">Stock</h1>
-    {% if products|length <1 %}
-    <h1>No products scanned</h1>
-    {% else %}
-    <div class="backTable center-horizontal">
+    <div>
+        <h1 style="text-align: center">Stock</h1>
+    </div>
+    <div class="backTable">
         <table id='item-tab'>
             <thead>
                 <tr>
@@ -49,12 +50,11 @@
             </form>        
         </table>
     </div>
-    {% endif %}
-    {% for prod in products %}
-    <div>
-    <button id="{{prod}}" onClick="graph_plot(this.id)">{{prod}}</button>
-    {% endfor %}
-    <br>
+    <div class='graph'>
+        {% for prod in products %}
+        <button id="{{prod.prod_name}}" onClick="graph_plot(this.id)">{{prod.prod_name}}</button>
+        {% endfor %}
+
     <img id='hello' alt="Chart" height="420">
     </div>
 {% endblock %}

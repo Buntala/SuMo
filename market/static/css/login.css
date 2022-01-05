@@ -62,7 +62,7 @@ body{
     backdrop-filter: blur(20px);
 }
 
-.btn:hover{
+.btn:hover,.btn:focus{
     color: white;
     background: linear-gradient(to right,#fc1c1c 30%, #f07b57);
 }

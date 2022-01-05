@@ -5,6 +5,13 @@ body{
 h1 {
     color:white;
 }
+.content{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
 .backtable{
     display: inline-block;
     text-align: center;
@@ -20,13 +27,9 @@ table{
     backdrop-filter: blur(20px);
     border-spacing: 50px 0;
     border-radius: 1em;
-    box-shadow: 10px 10px 10px rgba(46,54,68,0.3);
+    box-shadow: inset 10px 10px 10px rgba(46,54,68,0.3);
 }
-.center-horizontal {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
+
 .col-1{
     max-width: 120px;
 }

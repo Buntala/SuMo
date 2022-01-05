@@ -43,7 +43,6 @@
                 {% for category, message in messages %}
                 <div class='flash'>
                     {{ message }}
-                    <input type="image" src="{{ url_for('static',filename='images/close-icon.png') }}" style="size:50%"></input>
                 </div>
                 {% endfor %}
             {% endif %}

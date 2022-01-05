@@ -8,7 +8,7 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from pyzbar.pyzbar import decode
 from market import app, db
 from flask import render_template ,request, url_for, redirect, flash, get_flashed_messages, Response #Web Framework
-from market.model import Stock, User, Sales
+from market.model import Stock, User, Sales, record_stock_daily
 from market.forms import LoginForm
 from wtforms import ValidationError
 from flask_login import login_user,logout_user,login_required,current_user 
@@ -89,18 +89,34 @@ def plot_png(prod_name):
 
 #Creating plot from data
 def create_figure(prod_name):
+    xs,ys= get_data(prod_name)
+    title_graph = prod_name + "'s stock"
+    #start comment
+    '''
     df = pd.read_csv("market/static/test.csv")
     pic= df[df['product_name'] == prod_name]
-    fig = Figure(figsize=[12,6])
     nameProd = pic['product_name'].iloc[0]
-    axis = fig.add_subplot(1, 1, 1)
     xs = pic['date']
     ys = pic['stock']
-    axis.plot(xs, ys)
-    axis.set_title(nameProd)
-    axis.set_xlabel('Date')
-    axis.set_ylabel('Total num of Stock')
-    return fig
+    '''
+    #fin
+    if xs and ys: 
+        fig = Figure(figsize=[12,6])    
+        axis = fig.add_subplot(1, 1, 1)
+        axis.plot(xs, ys)
+        axis.set_title(title_graph)
+        axis.set_xlabel('Date')
+        axis.set_ylabel('Total num of Stock')
+        return fig
+
+def get_data(prod_name):
+    xs,ys=[],[]
+    query_data = record_stock_daily.query.filter(record_stock_daily.prod_name == prod_name).all()
+    for row in query_data:
+        xs.append(str(row.date)[:10])
+        ys.append(row.stock_num)
+    return(xs,ys)
+
 
 #Openning camera and scan QR code
 @app.route('/scan')

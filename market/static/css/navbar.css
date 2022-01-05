@@ -9,7 +9,7 @@ nav{
     justify-content: space-between;
     align-items: center;
     background: linear-gradient(45deg, rgba(255, 255, 255, 0.7),rgba(255, 255, 255, 0.4));
-    backdrop-filter: blur(30px);
+    backdrop-filter: blur(15px);
     background-clip:padding-box;
     box-shadow: 10px 10px 10px rgba(46,54,68,0.1);
 }
@@ -42,12 +42,16 @@ nav ul li a {
     color:white;
 }
 .flash{
-    display: flex;
-    justify-content: space-between;
-    margin: 20px;
-    padding: 1em;
-    background: blue;
-    color: white;
-    border-radius: 10px;
+    display: block;
+    text-align: center;
+    font-size: 1.25rem;
+    padding: 0.5em;
+    /* delete later*/
+    background: #FC2A00;
 }
-
+.error{
+    background: #FC2A00;
+}
+.success{
+    background: #09FC00;
+}

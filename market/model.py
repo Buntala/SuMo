@@ -34,12 +34,12 @@ class Stock(db.Model):
     prod_name = db.Column(db.String(100), nullable = False) 
     price = db.Column(db.Integer, nullable=False)
     prod_weight = db.Column(db.Integer,nullable=False)
-    stock_num = db.Column(db.Integer, nullable=False)
-    stock_unit = db.Column(db.String(30), nullable=False, default=0)
+    stock_num = db.Column(db.Integer, nullable=False, default=0)
+    stock_unit = db.Column(db.String(30), nullable=False)
     min_stock = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
-        return  '<Task %r>' % self.id
+        return  '<stock %r>' % self.id
 
 class Sales(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -48,6 +48,16 @@ class Sales(db.Model):
     price = db.Column(db.Integer, nullable=False)
     amount = db.Column(db.Integer, nullable=False)
     total_price = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return  '<Task %r>' % self.id
+
+class record_stock_daily(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    prod_name = db.Column(db.String(100), nullable = False) 
+    date = db.Column(db.Date, nullable = False)
+    stock_num = db.Column(db.Integer, nullable=False)
+    stock_unit = db.Column(db.String(30), nullable=False)
 
     def __repr__(self):
         return  '<Task %r>' % self.id
