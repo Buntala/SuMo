@@ -28,9 +28,8 @@ def index():
             total = int(amount)*int(prod.price)
             hist = Sales(prod_name = prod.prod_name, date = time_sales, price = prod.price, amount=amount, total_price = total)
             db.session.add(hist)
-            #prod.stock_num -= int(amount)
+            prod.stock_num -= int(amount)
             db.session.commit()
-            print(prod.stock_num)
         session.clear()
         #return redirect(url_for('index'))
 
@@ -42,7 +41,7 @@ def index():
 @login_required
 def admin():
     if not current_user.is_admin:
-        flash("You don't have the authorization")
+        flash("You don't have the authorization",'error')
         return redirect(url_for('index'))
     else:
         products = Stock.query.all()
@@ -54,64 +53,53 @@ def admin():
 def test():
     return redirect(url_for('index'))
 
-#Test page, only for debugging
-@app.route('/plot')
-@login_required
-def plot():
-    if not current_user.is_admin:
-        flash("You don't have the authorization")
-        return redirect(url_for('index'))
-    else:
-        df = pd.read_csv("market/static/test.csv")
-        if request.method=="POST": 
-            pass
-        prod = df['product_name'].unique()
-        return render_template('plot.html',products=prod)
-
-def pict(df):
-    pic= df[df['product_name'] == request.form['plot-btn']]
-    #plt.figure(figsize=[12,6])
-    plt.plot(pic['date'],pic['stock'])
-    nameProd = pic['product_name'].iloc[0]
-    plt.title(nameProd)
-    plt.xlabel('Date')
-    plt.ylabel('Total num of Stock')
-    plt.savefig('market/static/images/new_plot.png')
 
 #Saving plot to routes
 @app.route('/plot.png/<prod_name>')
+@login_required
 def plot_png(prod_name):
-
-    fig = create_figure(prod_name)
-    output = io.BytesIO()
-    FigureCanvas(fig).print_png(output)
-    return Response(output.getvalue(), mimetype='image/png')
+    if not current_user.is_admin:
+        flash("You don't have the authorization",'error')
+        return redirect(url_for('index'))
+    else:
+        fig = create_figure(prod_name)
+        output = io.BytesIO()
+        FigureCanvas(fig).print_png(output)
+        return Response(output.getvalue(), mimetype='image/png')
 
 #Creating plot from data
 def create_figure(prod_name):
     xs,ys= get_data(prod_name)
-    title_graph = prod_name + "'s stock"
-    #start comment
-    '''
-    df = pd.read_csv("market/static/test.csv")
-    pic= df[df['product_name'] == prod_name]
-    nameProd = pic['product_name'].iloc[0]
-    xs = pic['date']
-    ys = pic['stock']
-    '''
-    #fin
+    title_graph = prod_name.capitalize() + " Stock Graph"
     if xs and ys: 
-        fig = Figure(figsize=[12,6])    
+        fig = Figure(figsize=[10,6])
         axis = fig.add_subplot(1, 1, 1)
-        axis.plot(xs, ys)
-        axis.set_title(title_graph)
-        axis.set_xlabel('Date')
-        axis.set_ylabel('Total num of Stock')
+        fig.patch.set_alpha(0)
+        axis.patch.set_alpha(0)
+        #change spine color  
+        axis.spines['bottom'].set_color('white')
+        axis.spines['top'].set_color('white') 
+        axis.spines['right'].set_color('white')
+        axis.spines['left'].set_color('white')
+        #set tick rotation and color
+        #saxis.set_xticklabels(xs,rotation=30)
+        axis.tick_params(axis='x', colors='white')
+        axis.tick_params(axis='y', colors='white')
+        #set title andlabel color
+        axis.title.set_color('white')
+        fig.patch.set_alpha(0)
+        axis.patch.set_alpha(0)
+        axis.yaxis.label.set_color('white')
+        #graph plotting
+        axis.plot(xs, ys, color='#A507FF')
+        axis.set_title(title_graph, fontsize=20)
+        axis.set_ylabel('Total Stock', fontsize=16)
+        axis.tick_params(axis='x', labelrotation=30)
         return fig
 
 def get_data(prod_name):
     xs,ys=[],[]
-    query_data = record_stock_daily.query.filter(record_stock_daily.prod_name == prod_name).all()
+    query_data = record_stock_daily.query.filter(record_stock_daily.prod_name == prod_name).order_by(record_stock_daily.date).all()
     for row in query_data:
         xs.append(str(row.date)[:10])
         ys.append(row.stock_num)
@@ -146,13 +134,13 @@ def login():
         user_exist = User.query.filter(User.username == form.username.data).first()
         if user_exist and user_exist.check_password_correction(submitted_pass=form.password.data):
             login_user(user_exist)
-            #flash("You are logged in!")
+            flash("You are logged in!",'success')
             if current_user.is_admin:
                 return redirect(url_for('admin'))
             else:
                 return redirect(url_for('index'))
         else:
-            print("no")
+            flash("Username and password no match found!",'error')
             return redirect(url_for('login'))
             #raise ValidationError('Username and password does not match')
     #if form.errors != {}:
@@ -163,5 +151,5 @@ def login():
 @app.route('/logout')
 def logout_page():
     logout_user()
-    flash("You have been logged out", category='info')
+    flash("You have been logged out", 'info')
     return redirect(url_for("login"))

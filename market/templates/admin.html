@@ -4,9 +4,8 @@
 
 <title>Admin Page</title>
 <link rel="stylesheet" href="{{ url_for('static',filename='css/table.css') }}">
-<link rel="stylesheet" href="{{ url_for('static',filename='css/admin.css') }}">
 <script src='static/js/plot.js'></script>
-<style>body{background-image: url("{{ url_for('static',filename='images/wall-02.jpg') }}")}</style>
+<style>body{background-image: url("{{ url_for('static',filename='images/admin-bg.jpg') }}")}</style>
 {% endblock %}
 {% block body %}
 
@@ -14,7 +13,7 @@
     <div>
         <h1 style="text-align: center">Stock</h1>
     </div>
-    <div class="backTable">
+    <div class="backTable adminTab">
         <table id='item-tab'>
             <thead>
                 <tr>
@@ -50,11 +49,16 @@
             </form>        
         </table>
     </div>
-    <div class='graph'>
-        {% for prod in products %}
-        <button id="{{prod.prod_name}}" onClick="graph_plot(this.id)">{{prod.prod_name}}</button>
-        {% endfor %}
-
-    <img id='hello' alt="Chart" height="420">
+    <div class="graph-container">
+        <div class='graph'>
+            <div class="graph-btn">
+                {% for prod in products %}
+                <button id="{{prod.prod_name}}" onClick="graph_plot(this.id)">{{prod.prod_name}}</button>
+                {% endfor %}
+            </div>
+            <div class="graph-img">
+                <img id='hello' alt="Chart" height="420">
+            </div>
+        </div>
     </div>
 {% endblock %}

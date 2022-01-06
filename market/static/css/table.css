@@ -19,6 +19,9 @@ h1 {
     padding: 1em;
     border-radius: 1.5em;
 }
+.adminTab{
+    background: linear-gradient(45deg,#7B1BEA, #FD0000);
+}
 table{
     display: inline-block;
     color:white;
@@ -40,4 +43,50 @@ table{
 .col-4{
     min-width: 240px;
     max-width: 480px;
+}
+.graph-container{
+    background: linear-gradient(to bottom,#b1b1b1, #5c5c5c);
+    padding: 1em;
+    border-radius: 1.5em;
+    margin-top: 2em;
+
+}
+
+.graph{
+    overflow: hidden;
+    text-align: center;
+    display: flex;
+    color:white;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(20px);
+    border-spacing: 50px 0;
+    border-radius: 1em;
+    box-shadow: inset 10px 10px 10px rgba(46,54,68,0.3);
+}
+.graph-btn{
+    border-right: solid 2px #646161;
+}
+.graph-btn button{
+    text-transform: capitalize;
+    background: none;
+    color:white;
+    width: 100%;
+    display: block;
+    font:inherit;
+    font-size: 1.3em;
+    padding: 0.5em 2em;
+    overflow: hidden;
+    border-radius: inherit;
+    border: none;
+    border-bottom:solid 2px #646161;
+    max-width: 300px;
+}
+.graph-img{
+    height: 420;
+    width: 700;
+    align-items: center;
+    justify-content: center;
+}
+#hello{
+    display: none;
 }
