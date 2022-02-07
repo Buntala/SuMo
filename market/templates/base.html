@@ -28,11 +28,6 @@
                     <li><a href="{{url_for('scan')}}">Scan</a></li>
                     <li><a href="{{url_for('logout_page')}} "> Logout</a></li>
                 {% else %}
-                    <li class="{{ 'active' if active_page == 'index' }}"><a href="{{url_for('index')}}">Home</a></li>
-                    {%if current_user.is_admin %}
-                    <li class="{{ 'active' if active_page == 'admin' }} "><a href="{{url_for('admin')}} ">Stock</a></li>
-                    {%endif%}
-                    <li><a href="{{url_for('scan')}}">Scan</a></li>
                     <li class="{{ 'active' if active_page == 'login' }}"><a href="{{url_for('login')}}">Login</a></li>
                 {%endif%}
                 </ul>

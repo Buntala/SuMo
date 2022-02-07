@@ -37,7 +37,7 @@ class Stock(db.Model):
     stock_num = db.Column(db.Integer, nullable=False, default=0)
     stock_unit = db.Column(db.String(30), nullable=False)
     min_stock = db.Column(db.Integer, nullable=False)
-
+    qr_code = db.Column(db.String(32), nullable=False)
     def __repr__(self):
         return  '<stock %r>' % self.id
 
@@ -60,4 +60,12 @@ class record_stock_daily(db.Model):
     stock_unit = db.Column(db.String(30), nullable=False)
 
     def __repr__(self):
-        return  '<Task %r>' % self.id
+        return  '<Recorded_Stock %r>' % self.id
+
+class jumlahBDT(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nama_barang = db.Column(db.String(30), nullable = False) 
+    unit = db.Column(db.Integer, nullable=False)
+
+    def repr(self):
+        return  '<Hasil Timbangan %r>' % self.id 

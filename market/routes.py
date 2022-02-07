@@ -19,6 +19,7 @@ from datetime import datetime
 @app.route('/index', methods=['GET','POST'])
 @login_required
 def index():
+
     if request.method=="POST":
         time_sales = datetime.now().replace(microsecond=0)
         for i in session:
@@ -36,8 +37,20 @@ def index():
     products = Stock.query.filter(Stock.id.in_(session)).all()
     return render_template('scan.html',products=products)
 
+def data_check():
+    data = Stock.query.all()
+    for row in data:
+        if row.stock_num == jumlahBDT.query.filter(jumlahBDT.nama_barang==row.prod_name).unit:
+            flash("Stock Data and Weight Count Data are Different!","info")
+        low_stock_list = []
+        if row.stock_num <= row.min_stock:
+            low_stock_list.append(row.prod_name)
+        flash("Stock Low, Please Order! {}".format(", ".join(low_stock_list)),"info")
+            
+    
+
 #Admin page only accessible by admin user
-@app.route('/admin')#, methods=['GET','POST'])
+@app.route('/admin')
 @login_required
 def admin():
     if not current_user.is_admin:
@@ -87,8 +100,6 @@ def create_figure(prod_name):
         axis.tick_params(axis='y', colors='white')
         #set title andlabel color
         axis.title.set_color('white')
-        fig.patch.set_alpha(0)
-        axis.patch.set_alpha(0)
         axis.yaxis.label.set_color('white')
         #graph plotting
         axis.plot(xs, ys, color='#A507FF')
