@@ -7,4 +7,6 @@ Sumo is a role-based application that helps supermarkets run its business. As an
 
 for Documentaion, please visit link https://drive.google.com/drive/folders/1Tf4F7U4MTWvp_zKaxCcRTJzqzRtyGWuU?usp=sharing
 
+for Hardware info visit link below
+
 [SuMo ESP32 Module](https://github.com/Stephen-Fongar/SuMo-Supermarket-Monitoring-System-/tree/master)
